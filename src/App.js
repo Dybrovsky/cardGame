@@ -35,31 +35,45 @@ class App extends React.Component {
     }
 
     fillArray = () => {
-        const cards = []
 
-        for(let i=1; i<= 36; i++){
-            cards.push(i)
+        const deck = [];
+        const suits = ['♡', '♣', '♢', '♠'];
+        for (let i = 0; i < suits.length; i++) {
+            for (let j = 2; j <= 14; j++) {
+                let v = j;
+                if (j === 11)
+                    v = 'J'
+                if (j === 12)
+                    v = 'Q'
+                if (j === 13)
+                    v = 'K'
+                if (j === 14)
+                    v = 'A'
+                deck.push({suit: suits[i], rank: j, value: v})
+            }
+        }
+        for (let i = deck.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = deck[i];
+            deck[i] = deck[j];
+            deck[j] = temp;
         }
 
-        const shuffledCards = cards.sort((a, b) => 0.5 - Math.random());
-
         this.setState({
-            cards: shuffledCards,
+            cards: deck
         })
+        console.log(deck)
 
-    };
+    }
 
 
-    givenCards = () => {
+    giveCards = () => {
 
         const computerCard = this.state.cards.pop();
         const playerCard = this.state.cards.pop();
 
-        const IfIAmWin = playerCard > computerCard;
-        const pointComputer = IfIAmWin ? 0 : 1;
-        const pointPlayer = IfIAmWin ? 1 : 0;
-
-
+        const pointComputer = playerCard.rank === computerCard.rank ? 0 : (playerCard.rank > computerCard.rank ? 0 : 1);
+        const pointPlayer = playerCard.rank === computerCard.rank ? 0 : (playerCard.rank > computerCard.rank ? 1 : 0);
         this.setState({
             computerCard: computerCard,
             playerCard: playerCard,
@@ -71,7 +85,6 @@ class App extends React.Component {
         }))
 
 
-
     }
 
     componentDidMount() {
@@ -79,23 +92,28 @@ class App extends React.Component {
     }
 
 
-
     render() {
-        switch (this.state.activePage) {
-            case start:
-                return <Start state={this.state}  name={this.state.name} setName={this.setName} setPage={this.setPage}
-                              fill={this.fillArray}/>
-            case game:
-                return <Battlefield state={this.state}  fillArray={this.fillArray} givenCards={this.givenCards}
-                                    name={this.state.name} setPage={this.setPage}/>
-            default:
-                return <Finish/>
+
+        if (this.state.countComputer === 5 || this.state.countPlayer === 5) {
+            return <Finish state={this.state} name={this.state.name}/>
+        } else {
+            switch (this.state.activePage) {
+                case start:
+                    return <Start state={this.state} name={this.state.name} setName={this.setName}
+                                  setPage={this.setPage}/>
+                case game:
+                    return <Battlefield state={this.state} giveCards={this.giveCards}
+                                        name={this.state.name} setPage={this.setPage}/>
+                default:
+                    return <Finish/>
 
 
+            }
         }
 
-
     }
+
+
 }
 
 export default App;

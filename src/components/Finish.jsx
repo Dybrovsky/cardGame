@@ -1,13 +1,29 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-const Finish = () => {
-    return (
-        <div>
-            <h1></h1>
-            <h2></h2>
-            <button>Again</button>
-        </div>
-    );
-};
+class Finish extends Component {
+
+
+    render() {
+        if (this.props.state.countPlayer === 5) {
+            return (
+                <div>
+                    {this.props.name} win!
+                    <button onClick={}>Again</button>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    Computer win!
+                    <button>Again</button>
+                </div>
+            )
+        }
+
+
+    }
+}
 
 export default Finish;
+
+

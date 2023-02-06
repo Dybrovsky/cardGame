@@ -1,31 +1,44 @@
 import React, {Component} from 'react';
 
 class Battlefield extends Component {
+componentDidMount() {
+    this.props.giveCards()
+}
+
+
+
     render() {
-        // console.log(this.props.state.countPlayer)
-        // console.log(this.props.state.countComputer)
-        // console.log('play',this.props.state.player)
-        // console.log('comp',this.props.state.computer)
+
         return (
             <div>
-                <h2>Computer</h2>
                 <div>
                     <div className="opponentCards">
-                        Computer
-                        {this.props.state.computerCard}
-                        {this.props.state.countComputer}
+
+                        <h3>Computer</h3>
+                        <div>
+                            <div>
+                            Points: {this.props.state.countComputer}
+                            </div>
+                            {this.props.state.computerCard.value}
+                            {this.props.state.computerCard.suit}                        </div>
                     </div>
                     <div className="myCards">
-                        I
-                        {this.props.state.playerCard}
-                        {this.props.state.countPlayer}
+                        <h3>{this.props.name}</h3>
+                        <div>
+                            <div>
+                            Points: {this.props.state.countPlayer}
+                            </div>
+                            {this.props.state.playerCard.value}
+                            {this.props.state.playerCard.suit}
+                        </div>
                     </div>
-                    <h3>{this.props.name}</h3>
-                    <button onClick={this.props.givenCards}>
+                    <button onClick={this.props.giveCards}>
                         Next move
                     </button>
 
+
                 </div>
+
             </div>
         );
 
