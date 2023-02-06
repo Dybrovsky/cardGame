@@ -15,6 +15,8 @@ class App extends React.Component {
             count: 0,
             activePage: start,
             cards: [],
+            playerCard: [],
+            computerCard: [],
         };
 
     }
@@ -50,13 +52,18 @@ class App extends React.Component {
 
     givenCards = () => {
 
-        const playerCard = this.state.cards.pop();
         const computerCard = this.state.cards.pop();
+        const playerCard = this.state.cards.pop();
 
-        const amIWin = playerCard > computerCard;
-        const pointComputer = amIWin ? 0 : 1;
-        const pointPlayer = amIWin ? 1 : 0;
+        const IfIAmWin = playerCard > computerCard;
+        const pointComputer = IfIAmWin ? 0 : 1;
+        const pointPlayer = IfIAmWin ? 1 : 0;
 
+
+        this.setState({
+            computerCard: computerCard,
+            playerCard: playerCard,
+        })
 
         this.setState(prevState => ({
             countPlayer: prevState.countPlayer + pointPlayer,
