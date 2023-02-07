@@ -1,9 +1,10 @@
 import './App.css';
-import Start from "./components/Start";
-import Battlefield from "./components/Battlefield";
-import Finish from "./components/Finish";
+import Start from "./components/start/Start";
+import Battlefield from "./components/battlefield/Battlefield";
+import Finish from "./components/finish/Finish";
 import React from "react";
 import {game, start} from "./utils/constants";
+import battlefield from "./components/battlefield/Battlefield";
 
 class App extends React.Component {
     constructor(props) {
@@ -21,6 +22,19 @@ class App extends React.Component {
 
     }
 
+
+    stateToStart = () =>{
+        this.setState({
+            name: this.state.name,
+            countPlayer: 0,
+            countComputer: 0,
+            count: 0,
+            activePage: game,
+            playerCard: [],
+            computerCard: [],
+        })
+
+    }
 
     setName = (name) => {
         this.setState({
@@ -62,7 +76,6 @@ class App extends React.Component {
         this.setState({
             cards: deck
         })
-        console.log(deck)
 
     }
 
@@ -83,7 +96,8 @@ class App extends React.Component {
             countPlayer: prevState.countPlayer + pointPlayer,
             countComputer: prevState.countComputer + pointComputer,
         }))
-
+        if (this.state.countComputer === 5 || this.state.countPlayer ===5 )
+            this.setPage('game')
 
     }
 
@@ -95,7 +109,8 @@ class App extends React.Component {
     render() {
 
         if (this.state.countComputer === 5 || this.state.countPlayer === 5) {
-            return <Finish state={this.state} name={this.state.name}/>
+            return <Finish stateToStart={this.stateToStart}  setPage={this.setPage} state={this.state} name={this.state.name}
+            fillArr={this.fillArray}/>
         } else {
             switch (this.state.activePage) {
                 case start:

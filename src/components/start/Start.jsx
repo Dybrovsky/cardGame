@@ -1,6 +1,6 @@
 import React from 'react';
-import {game} from "../utils/constants";
-import Battlefield from "./Battlefield";
+import {game} from "../../utils/constants";
+import stl from './Start.module.css'
 
 class Start extends React.Component {
 
@@ -18,11 +18,11 @@ class Start extends React.Component {
     render() {
 
         return (
-            <div>
+            <div className={stl.cardGameWindow}>
                 <h1>Ready for war</h1>
-                <input value={this.props.name} onChange={this.setName} type="text" aria-label={'Your name'}/>
+                <input className={stl.nameField} value={this.props.name} onChange={this.setName} type="text" aria-label={'Your name'}/>
                 <div>
-                    <button  onClick={this.setPage}>Start!</button>
+                    <button className={stl.button} onClick={this.setPage}>Start!</button>
                 </div>
             </div>
         );
